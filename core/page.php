@@ -2,7 +2,8 @@
 
 $pageName = $GLOBALS['uri'];
 
-$contentData = file_get_contents('page/'.$pageName.'.md');
+$recoveredData = file_get_contents($GLOBALS['root'].'/page/'.$pageName.'.md');
+$pageData = unserialize($recoveredData);
 
 $config_array = parse_ini_file(__DIR__.'/config.ini');
 
@@ -14,9 +15,11 @@ $tempHead->set("page_uc", ucfirst($pageName));
 $tempHead->set("site", $config_array['site_name']); 
 $tempHead->set("page", $pageName);
 
-$tempContent = new Template(__DIR__."/content.tpl");
-$tempContent->set('page_name', $pageName);
-$tempContent->set('main_content', $contentData);
+if (file_exists(__DIR__.'/'.$pageName.'.php')) {
+	include(__DIR__.'/'.$pageName.'.php');	
+} else {
+	include(__DIR__.'/content.php');	
+}
 
 $tempTail = new Template(__DIR__."/tail.tpl");
 

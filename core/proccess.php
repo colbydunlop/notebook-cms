@@ -28,5 +28,30 @@ class Template {
 	
 }
 
+class Page {
+	
+	protected $output;
+	
+	public function __construct($name, $desc) {
+		
+		$values = array (
+			"name" => strtolower($name),
+			"desc" => strtolower($desc),
+		);
+	
+		if (file_exists($GLOBALS['root'].'/page/'.$values['name'].'.md')) {
+			$this->output = "error: page already exists";
+		} else {
+			$serializedData = serialize($values);
+			file_put_contents($GLOBALS['root'].'/page/'.$values['name'].'.md', $serializedData);
+			$this->output = "page successfully created!";	
+		}
+	}
+	
+	public function output() {
+		return $this->output;
+	}
+}
+
 
 ?>
