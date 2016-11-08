@@ -11,6 +11,19 @@ class Template {
 	public function set($key, $value) {
 		$this->values[$key] = $value;
 	}
+	
+	static public function merge($templates, $separator = "") {
+		$output = "";
+	
+		foreach ($templates as $template) {
+			$content = (get_class($template) !== "Template")
+				? "Error, incorrect type - expected Template."
+				: $template->output();
+			$output .= $content . $separator;
+		}
+	
+		return $output;
+	}
 	  
 	public function output() {
 		if (!file_exists($this->file)) {
@@ -38,12 +51,15 @@ class Page {
 			"name" => strtolower($name),
 			"desc" => strtolower($desc),
 		);
-	
-		if (file_exists($GLOBALS['root'].'/page/'.$values['name'].'.md')) {
+		
+		$path = ($GLOBALS['root'].'/data/worlds/'.$_SESSION['world'].'/pages/'.$values['name']);
+		
+		if (file_exists($path)) {
 			$this->output = "error: page already exists";
 		} else {
+			mkdir($path);
 			$serializedData = serialize($values);
-			file_put_contents($GLOBALS['root'].'/page/'.$values['name'].'.md', $serializedData);
+			file_put_contents($path.'/'.$values['name'].'.md', $serializedData);
 			$this->output = "page successfully created!";	
 		}
 	}
@@ -51,6 +67,34 @@ class Page {
 	public function output() {
 		return $this->output;
 	}
+}
+
+class World {
+	
+	protected $output;
+	
+	public function __construct($name, $desc) {
+	
+		$values = array (
+			"name" => strtolower($name),
+			"desc" => strtolower($desc),
+		);
+		
+		$path = ($GLOBALS['root'].'/data/worlds/'.$values['name']);
+		
+		if (file_exists($path)) {
+			$this->output = "error: World already exists";
+		} else {
+			mkdir($path);
+			$this->output = "World successfully created!";
+		}
+		
+	}
+	
+	public function output() {
+		return $this->output;
+	}
+	
 }
 
 
