@@ -1,0 +1,1 @@
+<div class="text-field field" contenteditable="true" data-key="[@key]">[@content]</div>

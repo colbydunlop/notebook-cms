@@ -10,7 +10,7 @@ foreach($worlds as $world) {
 
 $worldContents = Template::merge($worldTemplates);
 
-$tempContent = new Template($GLOBALS['root'].'/templates/world-list.tpl');
-$tempContent->set('world_list', $worldContents);
+$tempContent = new Template($GLOBALS['root'].'/templates/list.tpl');
+$tempContent->set('list', $worldContents);
 
 ?>

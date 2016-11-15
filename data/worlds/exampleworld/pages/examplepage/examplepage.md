@@ -1,1 +1,1 @@
-a:2:{s:4:"name";s:11:"examplepage";s:4:"desc";s:14:"examplecontent";}
+a:3:{s:4:"page";a:2:{s:4:"name";s:11:"examplepage";s:4:"desc";s:14:"examplecontent";}s:5:"block";a:2:{s:4:"name";s:10:"text-field";s:7:"content";s:9:"text-area";}s:4:"data";a:1:{i:0;a:2:{s:4:"name";s:6:"sample";s:7:"content";s:26:"I can change this now <br>";}}}

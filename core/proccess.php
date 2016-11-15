@@ -48,18 +48,30 @@ class Page {
 	public function __construct($name, $desc) {
 		
 		$values = array (
-			"name" => strtolower($name),
-			"desc" => strtolower($desc),
+			"page" => array(
+				"name" => strtolower($name),
+				"desc" => strtolower($desc),
+			),
+			"block" => array(
+				"name" => "text-field",
+				"content" => "text-area",
+			),
+			"data" => array(
+				array(
+					"name" => "sample",
+					"content" => "sample text",
+				)
+			)
 		);
 		
-		$path = ($GLOBALS['root'].'/data/worlds/'.$_SESSION['world'].'/pages/'.$values['name']);
+		$path = ($GLOBALS['worlddir'].'/pages/'.$values['page']['name']);
 		
 		if (file_exists($path)) {
 			$this->output = "error: page already exists";
 		} else {
 			mkdir($path);
 			$serializedData = serialize($values);
-			file_put_contents($path.'/'.$values['name'].'.md', $serializedData);
+			file_put_contents($path.'/'.$values['page']['name'].'.md', $serializedData);
 			$this->output = "page successfully created!";	
 		}
 	}
